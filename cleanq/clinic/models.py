@@ -15,6 +15,9 @@ class ClinicRepresentative(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def __str__(self):
+        return self.user.get_full_name()
+
     class Meta:
         permissions = [
             ("create_time_slot", "Can create new time slots for current clinic"),
@@ -32,8 +35,14 @@ class BasicUser(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def __str__(self):
+        return self.user.get_full_name()
+
 
 class Clinic(models.Model):
+    name = models.CharField(
+        max_length=200, help_text=_("name of the clinic"), verbose_name=_("name")
+    )
     rep = models.ForeignKey(
         ClinicRepresentative,
         null=True,
@@ -45,6 +54,9 @@ class Clinic(models.Model):
     address = models.CharField(
         help_text=_("address of the clinic"), verbose_name=_("address"), max_length=300
     )
+
+    def __str__(self):
+        return self.name
 
 
 class TimeSlot(models.Model):
@@ -70,4 +82,7 @@ class TimeSlot(models.Model):
         blank=True,
         related_name="reserved_slots",
     )
+
+    def __str__(self):
+        return f"{self.clinic.name} {self.start_time} until {self.end_time}"
 
