@@ -28,7 +28,7 @@ class ClinicSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Clinic
-        fields = ("url", "id", "rep", "address", "time_slots")
+        fields = ("name", "url", "id", "rep", "address", "time_slots")
 
 
 class TimeSlotSerializer(serializers.HyperlinkedModelSerializer):
