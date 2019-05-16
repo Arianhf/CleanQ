@@ -1,10 +1,36 @@
 from django.db import models
-from users.models import ClinicRepresentative, BasicUser
+from django.utils.translation import gettext_lazy as _
+from users.models import CustomUser
+from django.conf import settings
 
 import datetime
 from django.utils import timezone
 
-# settings.AUTH_USER_MODEL
+
+class ClinicRepresentative(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        help_text=_("user of the representative"),
+        verbose_name=_("user"),
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        permissions = [
+            ("create_time_slot", "Can create new time slots for current clinic"),
+            ("remove_time_slot", "Can remove time slots for current clinic"),
+            ("remove_clinic", "Can remove a clinic"),
+            ("create_clinic", "Can create new clinic"),
+        ]
+
+
+class BasicUser(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        help_text=_("user of the basic user"),
+        verbose_name=_("user"),
+        on_delete=models.CASCADE,
+    )
 
 
 class Clinic(models.Model):
@@ -13,6 +39,11 @@ class Clinic(models.Model):
         help_text=_("representative of the clinic"),
         verbose_name=_("rep"),
         on_delete=models.SET_NULL,
+    )
+    address = models.CharField(
+        help_text=_("representative of the clinic"),
+        verbose_name=_("rep"),
+        max_length=300,
     )
 
 
