@@ -11,6 +11,7 @@ black = "*"
 django = "*"
 djangorestframework = "*"
 django-crispy-forms = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.7"

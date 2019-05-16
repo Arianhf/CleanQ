@@ -4,24 +4,26 @@ from rest_framework import serializers
 
 class ClinicRepresentativeSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.ReadOnlyField(source="user.username")
+    clinics = "ClinicSerializer"
 
     class Meta:
         model = ClinicRepresentative
-        fields = ("url", "id", "user")
+        fields = ("url", "id", "user", "clinics")
 
 
 class BasicUserSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.ReadOnlyField(source="user.username")
+    reserved_slots = "TimeSlotSerializer"
 
     class Meta:
         model = BasicUser
-        fields = ("url", "id", "user")
+        fields = ("url", "id", "user", "reserved_slots")
 
 
 class ClinicSerializer(serializers.HyperlinkedModelSerializer):
-    rep = serializers.HyperlinkedRelatedField(view_name="representative-detail")
+    rep = ClinicRepresentativeSerializer()
     time_slots = serializers.PrimaryKeyRelatedField(
-        many=True, view_name="timeslot-detail", read_only=True
+        many=True, queryset=TimeSlot.objects.all()
     )
 
     class Meta:
@@ -30,10 +32,10 @@ class ClinicSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TimeSlotSerializer(serializers.HyperlinkedModelSerializer):
-    clinic = serializers.HyperlinkedRelatedField(view_name="clinic-detail")
-    reserver = serializers.HyperlinkedRelatedField(view_name="reserver-detail")
+    clinic = ClinicSerializer()
+    reserver = BasicUserSerializer()
 
     class Meta:
         model = TimeSlot
-        fields = ("url", "id", "clinic")
+        fields = ("url", "id", "clinic", "reserver")
 

@@ -40,11 +40,10 @@ class Clinic(models.Model):
         help_text=_("representative of the clinic"),
         verbose_name=_("rep"),
         on_delete=models.SET_NULL,
+        related_name="clinics",
     )
     address = models.CharField(
-        help_text=_("representative of the clinic"),
-        verbose_name=_("rep"),
-        max_length=300,
+        help_text=_("address of the clinic"), verbose_name=_("address"), max_length=300
     )
 
 
@@ -54,6 +53,7 @@ class TimeSlot(models.Model):
         help_text=_("the clinic that this time slot belongs to"),
         verbose_name=_("clinic"),
         on_delete=models.CASCADE,
+        related_name="time_slots",
     )
     start_time = models.DateTimeField("start time", default=timezone.now, blank=True)
     end_time = models.DateTimeField(
@@ -62,11 +62,12 @@ class TimeSlot(models.Model):
 
     reserver = models.ForeignKey(
         BasicUser,
-        help_text=_("representative of the clinic"),
-        verbose_name=_("rep"),
+        help_text=_("reserver of the this timeslot"),
+        verbose_name=_("reserver"),
         on_delete=models.SET_NULL,
         default=None,
         null=True,
         blank=True,
+        related_name="reserved_slots",
     )
 
