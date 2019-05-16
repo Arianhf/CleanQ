@@ -36,6 +36,7 @@ class BasicUser(models.Model):
 class Clinic(models.Model):
     rep = models.ForeignKey(
         ClinicRepresentative,
+        null=True,
         help_text=_("representative of the clinic"),
         verbose_name=_("rep"),
         on_delete=models.SET_NULL,
@@ -56,7 +57,7 @@ class TimeSlot(models.Model):
     )
     start_time = models.DateTimeField("start time", default=timezone.now, blank=True)
     end_time = models.DateTimeField(
-        "end time", default=timezone.now + datetime.timedelta(hours=3), blank=True
+        "end time", default=timezone.now() + datetime.timedelta(hours=3), blank=True
     )
 
     reserver = models.ForeignKey(
