@@ -1,10 +1,32 @@
 from .models import TimeSlot, Clinic, ClinicRepresentative, BasicUser
 from rest_framework import serializers
+from users.serializers import CustomUserSerializer
+
+
+class TimeSlotSerializer(serializers.HyperlinkedModelSerializer):
+    # clinic = serializers.ReadOnlyField(source="clinic.name")
+    clinic_name = serializers.ReadOnlyField(source="clinic.name")
+    clinic_url = serializers.HyperlinkedIdentityField(view_name="clinic-detail")
+    reserver_url = serializers.HyperlinkedIdentityField(
+        view_name="user-detail", allow_null=True
+    )
+
+    class Meta:
+        model = TimeSlot
+        fields = (
+            "url",
+            "id",
+            "start_time",
+            "end_time",
+            "clinic_name",
+            "clinic_url",
+            "reserver_url",
+        )
 
 
 class ClinicRepresentativeSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.ReadOnlyField(source="user.username")
-    clinics = "ClinicSerializer"
+    user = CustomUserSerializer(required=True)
+    clinics = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = ClinicRepresentative
@@ -12,8 +34,8 @@ class ClinicRepresentativeSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class BasicUserSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.ReadOnlyField(source="user.username")
-    reserved_slots = "TimeSlotSerializer"
+    user = CustomUserSerializer(required=True)
+    reserved_slots = TimeSlotSerializer(many=True)
 
     class Meta:
         model = BasicUser
@@ -21,21 +43,11 @@ class BasicUserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ClinicSerializer(serializers.HyperlinkedModelSerializer):
-    rep = ClinicRepresentativeSerializer()
-    time_slots = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=TimeSlot.objects.all()
-    )
+    rep = ClinicRepresentativeSerializer(required=True)
+
+    time_slots = TimeSlotSerializer(many=True, read_only=True)
 
     class Meta:
         model = Clinic
-        fields = ("name", "url", "id", "rep", "address", "time_slots")
-
-
-class TimeSlotSerializer(serializers.HyperlinkedModelSerializer):
-    clinic = ClinicSerializer()
-    reserver = BasicUserSerializer()
-
-    class Meta:
-        model = TimeSlot
-        fields = ("url", "id", "clinic", "reserver")
+        fields = ("name", "url", "id", "address", "rep", "time_slots")
 
