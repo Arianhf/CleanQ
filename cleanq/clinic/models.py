@@ -22,6 +22,7 @@ class Clinic(models.Model):
     address = models.CharField(
         help_text=_("address of the clinic"), verbose_name=_("address"), max_length=300
     )
+    is_verified = models.BooleanField("verified by admin", default=False)
 
     def __str__(self):
         return self.name

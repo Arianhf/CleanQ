@@ -7,6 +7,11 @@ urlpatterns = [
     path("clinics/<int:pk>/", views.ClinicDetail.as_view(), name="clinic-detail"),
     path("timeslots/", views.TimeSlotList.as_view(), name="timeslot-list"),
     path("timeslots/<int:pk>/", views.TimeSlotDetail.as_view(), name="timeslot-detail"),
+    path(
+        "available-timeslots/",
+        views.availableTimeSlotsList.as_view(),
+        name="available-timeslots-list",
+    ),
     # path("basic-users/", views.BasicUserList.as_view(), name="basicuser-list"),
     # path(
     #     "basic-users/<int:pk>/",

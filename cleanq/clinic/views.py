@@ -25,6 +25,9 @@ def api_root(request, format=None):
             # ),
             "timeslots": reverse("timeslot-list", request=request, format=format),
             "clinics": reverse("clinic-list", request=request, format=format),
+            "available-timeslots": reverse(
+                "available-timeslots-list", request=request, format=format
+            ),
         }
     )
 
@@ -68,3 +71,13 @@ class TimeSlotDetail(generics.RetrieveUpdateDestroyAPIView):
 #     queryset = BasicUser.objects.all()
 #     serializer_class = BasicUserSerializer
 
+
+class availableTimeSlotsList(generics.ListAPIView):
+    serializer_class = TimeSlotSerializer
+
+    def get_queryset(self):
+        """
+        this view should return a list of all available
+        timeslots for all clinics
+        """
+        return TimeSlot.objects.filter(reserver=None)
