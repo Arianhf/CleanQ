@@ -7,44 +7,12 @@ import datetime
 from django.utils import timezone
 
 
-class ClinicRepresentative(models.Model):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        help_text=_("user of the representative"),
-        verbose_name=_("user"),
-        on_delete=models.CASCADE,
-    )
-
-    def __str__(self):
-        return self.user.get_full_name()
-
-    class Meta:
-        permissions = [
-            ("create_time_slot", "Can create new time slots for current clinic"),
-            ("remove_time_slot", "Can remove time slots for current clinic"),
-            ("remove_clinic", "Can remove a clinic"),
-            ("create_clinic", "Can create new clinic"),
-        ]
-
-
-class BasicUser(models.Model):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        help_text=_("user of the basic user"),
-        verbose_name=_("user"),
-        on_delete=models.CASCADE,
-    )
-
-    def __str__(self):
-        return self.user.get_full_name()
-
-
 class Clinic(models.Model):
     name = models.CharField(
         max_length=200, help_text=_("name of the clinic"), verbose_name=_("name")
     )
     rep = models.ForeignKey(
-        ClinicRepresentative,
+        CustomUser,
         null=True,
         help_text=_("representative of the clinic"),
         verbose_name=_("rep"),
@@ -73,7 +41,7 @@ class TimeSlot(models.Model):
     )
 
     reserver = models.ForeignKey(
-        BasicUser,
+        CustomUser,
         help_text=_("reserver of the this timeslot"),
         verbose_name=_("reserver"),
         on_delete=models.SET_NULL,

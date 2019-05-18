@@ -1,9 +1,9 @@
 from django.shortcuts import render
 
-from clinic.models import BasicUser, ClinicRepresentative, Clinic, TimeSlot
+from clinic.models import Clinic, TimeSlot  # BasicUser, ClinicRepresentative
 from clinic.serializers import (
-    BasicUserSerializer,
-    ClinicRepresentativeSerializer,
+    # BasicUserSerializer,
+    # ClinicRepresentativeSerializer,
     ClinicSerializer,
     TimeSlotSerializer,
 )
@@ -19,10 +19,10 @@ def api_root(request, format=None):
     return Response(
         {
             "users": reverse("user-list", request=request, format=format),
-            "basic-users": reverse("basicuser-list", request=request, format=format),
-            "representatives": reverse(
-                "clinicrepresentative-list", request=request, format=format
-            ),
+            # "basic-users": reverse("basicuser-list", request=request, format=format),
+            # "representatives": reverse(
+            #     "clinicrepresentative-list", request=request, format=format
+            # ),
             "timeslots": reverse("timeslot-list", request=request, format=format),
             "clinics": reverse("clinic-list", request=request, format=format),
         }
@@ -49,22 +49,22 @@ class TimeSlotDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TimeSlotSerializer
 
 
-class ClinicRepresentativeList(generics.ListCreateAPIView):
-    queryset = ClinicRepresentative.objects.all()
-    serializer_class = ClinicRepresentativeSerializer
+# class ClinicRepresentativeList(generics.ListCreateAPIView):
+#     queryset = ClinicRepresentative.objects.all()
+#     serializer_class = ClinicRepresentativeSerializer
 
 
-class ClinicRepresentativeDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ClinicRepresentative.objects.all()
-    serializer_class = ClinicRepresentativeSerializer
+# class ClinicRepresentativeDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = ClinicRepresentative.objects.all()
+#     serializer_class = ClinicRepresentativeSerializer
 
 
-class BasicUserList(generics.ListCreateAPIView):
-    queryset = BasicUser.objects.all()
-    serializer_class = BasicUserSerializer
+# class BasicUserList(generics.ListCreateAPIView):
+#     queryset = BasicUser.objects.all()
+#     serializer_class = BasicUserSerializer
 
 
-class BasicUserDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = BasicUser.objects.all()
-    serializer_class = BasicUserSerializer
+# class BasicUserDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = BasicUser.objects.all()
+#     serializer_class = BasicUserSerializer
 

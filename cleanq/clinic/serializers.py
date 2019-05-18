@@ -1,10 +1,11 @@
-from .models import TimeSlot, Clinic, ClinicRepresentative, BasicUser
+from .models import TimeSlot, Clinic
+
+# , ClinicRepresentative, BasicUser
 from rest_framework import serializers
 from users.serializers import CustomUserSerializer
 
 
 class TimeSlotSerializer(serializers.HyperlinkedModelSerializer):
-    # clinic = serializers.ReadOnlyField(source="clinic.name")
     clinic_name = serializers.ReadOnlyField(source="clinic.name")
     clinic_url = serializers.HyperlinkedIdentityField(view_name="clinic-detail")
     reserver_url = serializers.HyperlinkedIdentityField(
@@ -24,26 +25,26 @@ class TimeSlotSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class ClinicRepresentativeSerializer(serializers.HyperlinkedModelSerializer):
-    user = CustomUserSerializer(required=True)
-    clinics = serializers.StringRelatedField(many=True)
+# class ClinicRepresentativeSerializer(serializers.HyperlinkedModelSerializer):
+#     user = CustomUserSerializer(required=True)
+#     clinics = serializers.StringRelatedField(many=True)
 
-    class Meta:
-        model = ClinicRepresentative
-        fields = ("url", "id", "user", "clinics")
+#     class Meta:
+#         model = ClinicRepresentative
+#         fields = ("url", "id", "user", "clinics")
 
 
-class BasicUserSerializer(serializers.HyperlinkedModelSerializer):
-    user = CustomUserSerializer(required=True)
-    reserved_slots = TimeSlotSerializer(many=True)
+# class BasicUserSerializer(serializers.HyperlinkedModelSerializer):
+#     user = CustomUserSerializer(required=True)
+#     reserved_slots = TimeSlotSerializer(many=True)
 
-    class Meta:
-        model = BasicUser
-        fields = ("url", "id", "user", "reserved_slots")
+#     class Meta:
+#         model = BasicUser
+#         fields = ("url", "id", "user", "reserved_slots")
 
 
 class ClinicSerializer(serializers.HyperlinkedModelSerializer):
-    rep = ClinicRepresentativeSerializer(required=True)
+    rep = CustomUserSerializer(required=True)
 
     time_slots = TimeSlotSerializer(many=True, read_only=True)
 
