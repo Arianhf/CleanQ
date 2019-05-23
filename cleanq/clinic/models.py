@@ -27,6 +27,11 @@ class Clinic(models.Model):
     def __str__(self):
         return self.name
 
+    class meta:
+        ordering = ["name"]
+        verbose_name = _("clinic")
+        verbose_name_plural = _("clinics")
+
 
 class TimeSlot(models.Model):
     clinic = models.ForeignKey(
@@ -55,3 +60,7 @@ class TimeSlot(models.Model):
     def __str__(self):
         return f"{self.clinic.name} {self.start_time} until {self.end_time}"
 
+    class meta:
+        ordering = ["clinic"]
+        verbose_name = _("timeslot")
+        verbose_name_plural = _("timeslots")

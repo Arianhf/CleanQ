@@ -1,0 +1,341 @@
+{% load i18n %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+
+  <title>Modern Business - Start Bootstrap Template</title>
+
+
+  <!-- Custom styles for this template -->
+  <link href="{% static '/clinic/css/modern-business.css' %}" rel="stylesheet">
+  {% if LANGUAGE_BIDI %}
+  <link rel="stylesheet" href="{% static 'clinic/css/bootstrap-rtl.min.css' %}">
+  {% endif %}
+  <!-- Bootstrap core CSS myTheme-->
+  <link rel="stylesheet" href="{% static '/clinic/css/mytheme.min.css' %}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'clinic/css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'clinic/css/override.css' %}">
+  <link rel="stylesheet" href="{% static 'clinic/css/bootstrap.min.css' %}">
+
+
+</head>
+
+<body class='bg-light'>
+
+  <!-- Navigation -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">{% trans "Local Library" %}</a>
+      {% block searchbox %}
+      <form id="search" method="POST" action="">
+        {% csrf_token %}
+        <input type="text" class="form-control ui-widget offset-md-4" id="books" name="books"
+          placeholder="{% trans 'Search' %}">
+      </form>
+      {% endblock searchbox %}
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+          <p>{% trans "Hi," %} {{ user.username }}</p>
+          <li>
+            {% comment %}
+            <a href="{% url 'profile' %}" class="nav-item nav-link">{% trans "Profile" %}</a>
+            }
+            {% endcomment %}
+
+          </li>
+          <li>
+            <a href="{% url 'email' %}" class="nav-item nav-link">{% trans "Change E-mail"%}</a>
+          </li>
+          <li>
+            <a href="{% url 'logout' %}" class="nav-item nav-link">{% trans "Logout" %}</a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{% url 'login' %}" class="nav-item nav-link">{% trans "Login" %}</a>
+          </li>
+          <li>
+            <a href="{% url 'signup' %}" class="nav-item nav-link">{% trans "Register" %}</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+    {% block heading_breadcrumbs %}
+    <br />
+    <!--
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="index.html">Home</a>
+      </li>
+      <li class="breadcrumb-item active">Portfolio 3</li>
+    </ol>
+    -->
+    {% endblock heading_breadcrumbs %}
+
+    {% if messages %}
+    {%for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="row">
+      <div class="col-md-2 pt-3">
+        <div class="content-section">
+          {% block sidebar %}
+          <ul class="sidebar-nav">
+            <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+          </ul>
+          <ul class="sidebar-nav">
+            {% if user.is_authenticated %}
+            <li>User: {{ user.get_username }}</li>
+            <li><a href="{% url 'logout'%}?next={{request.path}}">{% trans "Logout" %}</a></li>
+            {% else %}
+            <li><a href="{% url 'login'%}?next={{request.path}}">{% trans "Login" %}</a></li>
+            {% endif %}
+          </ul>
+
+          {% if user.is_staff %}
+          <hr />
+          <ul class="sidebar-nav">
+            <li>Staff</li>my_
+            {% if perms.clinic.can_mark_returned %}
+            <li><a href="{% url 'all-borrowed' %}">{% trans "All borrowed"%}</a></li>
+            {% endif %}
+          </ul>
+          {% endif %}
+          {% endblock %}
+        </div>
+      </div>
+      <div class="col-md-10">
+        {% block content %}
+        <div class="row">
+          <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Project One</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur
+                  eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt,
+                  illum tempora ex quae? Nihil, dolorem!</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Project Two</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio,
+                  gravida pellentesque urna varius vitae.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Project Three</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos quisquam, error quod
+                  sed cumque, odio distinctio velit nostrum temporibus necessitatibus et facere atque iure perspiciatis
+                  mollitia recusandae vero vel quam!</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Project Four</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio,
+                  gravida pellentesque urna varius vitae.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Project Five</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio,
+                  gravida pellentesque urna varius vitae.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">Project Six</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque earum nostrum
+                  suscipit ducimus nihil provident, perferendis rem illo, voluptate atque, sit eius in voluptates, nemo
+                  repellat fugiat excepturi! Nemo, esse.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endblock content %}
+        {% block pagination %}
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <nav aria-label="page navigation" class='mt-3'>
+          <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page=1" aria-label="First">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">{% trans "First" %}</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                {% trans "Previous" %}
+              </a>
+            </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li class="page-item active">
+              <a class="page-link" href="?page={{ num }}" aria-label="Current">
+                {{ num }}
+              </a>
+            </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ num }}" aria-label="Page {{num}}">
+                {{ num }}
+              </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                {% trans "Next" %}
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">{% trans "Last" %}</span>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+        {% endif %}
+        {% endblock pagination%}
+      </div>
+    </div>
+
+
+
+
+    {% comment %}
+    <ul class="pagination justify-content-center">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">1</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">2</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">3</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+    {% endcomment %}
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-4 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+  <!-- <script src="{% static '/clinic/js/jquery.min.js' %}"></script> -->
+  <script src="{% static '/clinic/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+
+
+  <!--<script src="{% static '/clinic/js/popper.min.js' %}"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+
+
+  <script>
+    $(document).ready(function () {
+      $("*").addClass('rtl')
+      $('#djDebug').find("*").removeClass('rtl');
+    });
+  </script>
+
+  {% block scripts %}
+  <script src="{% static '/clinic/EasyAutocomplete/jquery.easy-autocomplete.min.js' %}"></script>
+
+  {% endblock scripts %}
+  {% block extra_scripts %}
+  {% endblock extra_scripts %}
+</body>
+
+</html>

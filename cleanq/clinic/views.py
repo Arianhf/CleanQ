@@ -81,3 +81,9 @@ class availableTimeSlotsList(generics.ListAPIView):
         timeslots for all clinics
         """
         return TimeSlot.objects.filter(reserver=None)
+
+
+def index(request):
+
+    return render(request, "clinic/index.html")
+

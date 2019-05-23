@@ -1,0 +1,223 @@
+/*!
+ * Start Bootstrap - Modern Business (https://startbootstrap.com/template-overviews/modern-business)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-logomodern-business-nav/blob/master/LICENSE)
+ */
+
+/*
+COLOR PALLETE:
+
+$primary: #209B0E;
+$secondary: #839496;
+$success: #2AA198;
+$info: #268BD2;
+$warning: #CBB516;
+$danger: #DB300C;
+$light: #D7F8AF;
+$dark: #103010;
+
+
+*/
+@font-face {
+    font-family: 'B Nazanin';
+    src: local('B Nazanin'),
+        local('BNazanin'),
+        url('../fonts/BNazanin.woff2') format('woff2'),
+        url('../fonts/BNazanin.woff') format('woff'),
+        url('../fonts/BNazanin.ttf') format('truetype');
+    font-weight: 400;
+    font-stretch: normal;
+    /*font-style: normal;*/
+}
+@font-face {
+    font-family: 'Yekan';
+    src: local('Yekan'),
+        local('Yekan'),
+        url('../fonts/Yekan.ttf') format('truetype');
+    font-weight: 400;
+    font-stretch: normal;
+    /*font-style: normal;*/
+}
+
+@font-face {
+    font-family: 'B Nazanin';
+    src: local('B Nazanin Bold'),
+        local('BNazanin-Bold'),
+        url('../fonts/BNaznnBd.woff2') format('woff2'),
+        url('../fonts/BNaznnBd.woff') format('woff'),
+        url('../fonts/BNaznnBd.ttf') format('truetype');
+    font-weight: 700;
+    font-stretch: normal;
+    /*font-style: normal;*/
+}
+*{
+    font-family: 'Yekan';
+}
+
+p,h1,h2,h3,h4,h5,h6,a,div,span,article{
+    font-family: 'Yekan';
+}
+
+body {
+  padding-top: 56px;
+}
+
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.portfolio-item {
+  margin-bottom: 30px;
+}
+
+
+/*
+ STYLE FOR SEARCH BAR
+*/
+
+/*.searchbar{
+  margin-bottom: auto;
+  margin-top: auto;
+  height: 40px;
+  background-color: #d7f8af;
+  border-radius: 20px;
+  margin:0 10px;
+}
+
+.search_input{
+  color: #103010;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  caret-color:transparent;
+  line-height: 40px;
+  transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_input{
+  padding: 0 10px;
+  width: 450px;
+  caret-color:#103010;
+  transition: width 0.4s linear;
+}
+.searchbar:hover{
+  background:white;
+}
+
+.searchbar:hover > .search_icon{
+  background: white;
+  color: #103010;
+}
+
+.search_icon{
+  height: 40px;
+  width: 40px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color:white;
+}
+*/
+
+
+
+/* GOOGLE LOGIN STYLES */
+.google-button {
+  height: 40px;
+  border-width: 0;
+  background: white;
+  color: #737373;
+  border-radius: 5px;
+  white-space: nowrap;
+  box-shadow: 1px 1px 0px 1px rgba(0,0,0,0.05);
+  transition-property: background-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+  padding: 0;
+
+  &:focus,
+  &:hover {
+    box-shadow: 6px 9px 10px 6px rgba(0,0,0,0.1);
+  }
+
+  &:active {
+    background-color: #e5e5e5;
+    box-shadow: none;
+    transition-duration: 10ms;
+  }
+}
+
+.google-button__icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 8px;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+}
+
+.google-button__icon--plus {
+  width: 27px;
+}
+
+.google-button__text {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 24px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+button ~ button {
+  margin-left: 20px;
+}
+
+
+
+/*
+  STICKY FOOTER HIDING WHEN CONTENT AVAILABLE
+*/
+
+html{
+  height:100%;
+  box-sizing: border-box;
+}
+
+*,*:before,*:after{
+  box-sizing: inherit;
+}
+body{
+  position:relative;
+  margin:0;
+  padding-bottom:6rem;
+  min-height:100%;
+}
+footer{
+  position: absolute;
+  right:0;
+  bottom: 0;
+  left:0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
