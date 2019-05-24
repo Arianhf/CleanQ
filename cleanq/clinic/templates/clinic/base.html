@@ -118,13 +118,19 @@
             {% endif %}
           </ul>
 
-          {% comment %} {% if user.is_basic %} {% endcomment %}
+          {% if user.is_rep %}
           <hr />
           <ul class="sidebar-nav">
             <li><a href="{% url 'timeslot-create' %}">create time slot</a></li>
           </ul>
-          {% comment %} {% endif %} {% endcomment %}
+          {% endif %}
           
+          {% if user.is_basic %}
+          <hr />
+          <ul class="sidebar-nav">
+            <li><a href="{% url 'user-reserved-timeslots' %}">my reserved timeslots</a></li>
+          </ul>
+          {% endif %}
           
 
           {% endblock %}

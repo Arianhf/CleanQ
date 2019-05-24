@@ -13,11 +13,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.views import generic
-from clinic.forms import TimeslotCreateForm
+from clinic.forms import TimeslotCreateForm, TimeslotReserveForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from users.decorators import rep_required, basic_required
 from django.utils import timezone
+from django.contrib import messages
 
 
 @api_view(["GET"])
@@ -153,3 +154,50 @@ class UserPastReservedTimeSlotsList(generic.ListView):
         now = timezone.now()
 
         return TimeSlot.objects.filter(reserver=user, end_time__lt=(now))
+
+
+@method_decorator(rep_required, name="dispatch")
+@method_decorator(login_required, name="dispatch")
+class ClinicReservedTimeSlotsList(generic.ListView):
+    """Generic class-based list view for a list of clinics."""
+
+    model = TimeSlot
+    ordering = "start_time"
+    paginate_by = 15
+
+    def get_queryset(self):
+        user = self.request.user
+        return TimeSlot.objects.filter(pk=self.kwargs.get("pk"))
+
+
+@method_decorator(rep_required, name="dispatch")
+@method_decorator(login_required, name="dispatch")
+class ClinicPastReservedTimeSlotsList(generic.ListView):
+    """Generic class-based list view for a list of clinics."""
+
+    model = TimeSlot
+    ordering = "start_time"
+    paginate_by = 15
+
+    def get_queryset(self):
+        user = self.request.user
+
+        now = timezone.now()
+
+        return TimeSlot.objects.filter(pk=self.kwargs.get("pk"), end_time__lt=(now))
+
+
+def reserve_slot(request):
+    if request.method == "POST":
+        form = TimeslotReserveForm(request.POST)
+        timeslot = TimeSlot.objects.get(pk=request.POST.get("timeslot"))
+        timeslot.reserver = request.user
+        timeslot.save()
+
+        messages.success(request, "reserved succesfully.")
+        form = TimeslotReserveForm()
+        return render(request, "clinic/reserve.html", {"form": form})
+    else:
+        form = TimeslotReserveForm()
+    return render(request, "clinic/reserve.html", {"form": form})
+

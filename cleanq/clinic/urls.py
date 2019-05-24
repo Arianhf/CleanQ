@@ -3,6 +3,7 @@ from clinic import views
 
 urlpatterns = [
     path("", views.index, name="home"),
+    path("reserve-timeslot/", views.reserve_slot, name="reserve-timeslot"),
     path("clinic/<int:pk>/", views.ClinicDetailView.as_view(), name="clinic-detail"),
     path(
         "timeslot/create/", views.TimeslotCreateView.as_view(), name="timeslot-create"
@@ -10,12 +11,22 @@ urlpatterns = [
     path(
         "my-reserved-timeslots/",
         views.UserReservedTimeSlotsList.as_view(),
-        name="my-reserved-timeslots",
+        name="user-reserved-timeslots",
     ),
     path(
         "my-reserved-timeslots/past/",
         views.UserPastReservedTimeSlotsList.as_view(),
-        name="my-reserved-timeslots-past",
+        name="user-reserved-timeslots-past",
+    ),
+    path(
+        "clinic/<int:pk>/reserved-timeslots/",
+        views.ClinicReservedTimeSlotsList.as_view(),
+        name="clinic-reserved-timeslots",
+    ),
+    path(
+        "clinic/<int:pk>/reserved-timeslots/past/",
+        views.ClinicPastReservedTimeSlotsList.as_view(),
+        name="clinic-reserved-timeslots-past",
     ),
     path(
         "api/v1/",

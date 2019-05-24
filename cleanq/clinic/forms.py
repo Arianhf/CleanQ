@@ -51,3 +51,9 @@ class TimeslotCreateForm(forms.ModelForm):
             "start_date": forms.DateTimeField(input_formats=["%Y-%m-%d %H:%M"]),
             "end_date": forms.DateTimeField(input_formats=["%Y-%m-%d %H:%M"]),
         }
+
+
+class TimeslotReserveForm(forms.Form):
+    timeslot = forms.ModelChoiceField(
+        queryset=TimeSlot.objects.filter(reserver=None, clinic__is_verified=True)
+    )
