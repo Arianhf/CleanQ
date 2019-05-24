@@ -1,3 +1,21 @@
+{% extends "clinic/base.html" %}
 {% block content %}
-<h1> hi </h1>
+
+    <div class="row">
+
+    {% for clinic in clinics %}
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+        <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <div class="card-body">
+            <h4 class="card-title">
+                <a href="{{ clinic.get_absolute_url }}">{{clinic.name}}</a>
+            </h4>
+            <p class="card-text">{{clinic.address}}</p>
+            </div>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+        
 {% endblock content%}

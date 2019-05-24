@@ -19,17 +19,6 @@ $dark: #103010;
 
 */
 @font-face {
-    font-family: 'B Nazanin';
-    src: local('B Nazanin'),
-        local('BNazanin'),
-        url('../fonts/BNazanin.woff2') format('woff2'),
-        url('../fonts/BNazanin.woff') format('woff'),
-        url('../fonts/BNazanin.ttf') format('truetype');
-    font-weight: 400;
-    font-stretch: normal;
-    /*font-style: normal;*/
-}
-@font-face {
     font-family: 'Yekan';
     src: local('Yekan'),
         local('Yekan'),
@@ -50,13 +39,44 @@ $dark: #103010;
     font-stretch: normal;
     /*font-style: normal;*/
 }
+
+@font-face {
+  font-family: 'B Nazanin';
+  src: local('B Nazanin'),
+      local('BNazanin'),
+      url('../fonts/BNazanin.woff2') format('woff2'),
+      url('../fonts/BNazanin.woff') format('woff'),
+      url('../fonts/BNazanin.ttf') format('truetype');
+  font-weight: 400;
+  font-stretch: normal;
+  /*font-style: normal;*/
+}
+
 *{
-    font-family: 'Yekan';
+  /*font-family: 'B Nazanin';*/
 }
 
 p,h1,h2,h3,h4,h5,h6,a,div,span,article{
-    font-family: 'Yekan';
+  /* font-family: 'B Nazanin'; */
 }
+
+.img_cover{
+  width:100px;
+  margin:0 auto;
+  box-sizing: border-box;
+}
+.img_cover_border{
+  display:inline-block;
+  padding:15px;
+}
+
+.img_cover_div{
+  padding:10px;
+}
+.img_cover_link{
+  padding:10px;
+}
+
 
 body {
   padding-top: 56px;

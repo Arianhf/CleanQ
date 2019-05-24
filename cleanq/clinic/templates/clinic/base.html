@@ -26,10 +26,10 @@
   <link rel="stylesheet" href="{% static '/clinic/css/mytheme.min.css' %}">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static 'clinic/css/styles.css' %}">
   <link rel="stylesheet" href="{% static 'clinic/css/override.css' %}">
   <link rel="stylesheet" href="{% static 'clinic/css/bootstrap.min.css' %}">
-
+  <link rel="stylesheet" href="{% static 'clinic/css/styles.css' %}">
+  
 
 </head>
 
@@ -61,9 +61,6 @@
             }
             {% endcomment %}
 
-          </li>
-          <li>
-            <a href="{% url 'email' %}" class="nav-item nav-link">{% trans "Change E-mail"%}</a>
           </li>
           <li>
             <a href="{% url 'logout' %}" class="nav-item nav-link">{% trans "Logout" %}</a>
@@ -121,15 +118,15 @@
             {% endif %}
           </ul>
 
-          {% if user.is_staff %}
+          {% comment %} {% if user.is_basic %} {% endcomment %}
           <hr />
           <ul class="sidebar-nav">
-            <li>Staff</li>my_
-            {% if perms.clinic.can_mark_returned %}
-            <li><a href="{% url 'all-borrowed' %}">{% trans "All borrowed"%}</a></li>
-            {% endif %}
+            <li><a href="{% url 'timeslot-create' %}">create time slot</a></li>
           </ul>
-          {% endif %}
+          {% comment %} {% endif %} {% endcomment %}
+          
+          
+
           {% endblock %}
         </div>
       </div>

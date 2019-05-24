@@ -1,17 +1,16 @@
 from django.urls import path, include
 from clinic import views
 
-
-base_api = "api/v1/"
-
 urlpatterns = [
     path("", views.index, name="home"),
+    path("clinic/<int:pk>", views.ClinicDetailView.as_view(), name="clinic-detail"),
+    path("timeslot/create", views.TimeslotCreateView.as_view(), name="timeslot-create"),
     path(
         "api/v1/",
         include(
             (
                 [
-                    path("", views.api_root),
+                    path("", views.api_root, name="api-home"),
                     path("clinics/", views.ClinicList.as_view(), name="clinic-list"),
                     path(
                         "clinics/<int:pk>/",
@@ -32,28 +31,9 @@ urlpatterns = [
                         name="available-timeslots-list",
                     ),
                 ],
-                "users",
+                "api",
             ),
             namespace="api",
         ),
     ),
-    # path("basic-users/", views.BasicUserList.as_view(), name="basicuser-list"),
-    # path(
-    #     "basic-users/<int:pk>/",
-    #     views.BasicUserDetail.as_view(),
-    #     name="basicuser-detail",
-    # ),
-    # path(
-    #     "representatives/",
-    #     views.ClinicRepresentativeList.as_view(),
-    #     name="clinicrepresentative-list",
-    # ),
-    # path(
-    #     "representatives/<int:pk>/",
-    #     views.ClinicRepresentativeDetail.as_view(),
-    #     name="clinicrepresentative-detail",
-    # ),
-    path("rest-auth/", include("rest_auth.urls")),
-    path("users/", include("users.urls")),
 ]
-

@@ -12,6 +12,11 @@ from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from django.views import generic
+from clinic.forms import TimeslotCreateForm
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from users.decorators import rep_required, basic_required
 
 
 @api_view(["GET"])
@@ -84,6 +89,35 @@ class availableTimeSlotsList(generics.ListAPIView):
 
 
 def index(request):
+    clinics = Clinic.objects.all()
 
-    return render(request, "clinic/index.html")
+    context = {"clinics": clinics}
 
+    return render(request, "clinic/index.html", context=context)
+
+
+class ClinicDetailView(generic.DetailView):
+    model = Clinic
+
+
+@method_decorator(rep_required, name="dispatch")
+@method_decorator(login_required, name="dispatch")
+class TimeslotCreateView(generic.CreateView):
+    model = TimeSlot
+    form_class = TimeslotCreateForm
+    success_url = "/"
+
+    def get_form_kwargs(self):
+        kwargs = super(TimeslotCreateView, self).get_form_kwargs()
+        if self.request.method == "GET":
+            kwargs.update({"user": self.request.user})
+        return kwargs
+
+
+class ClinicListView(generic.ListView):
+    """Generic class-based list view for a list of clinics."""
+
+    model = Clinic
+    ordering = "name"
+    paginate_by = 15
+    queryset = Clinic.objects.prefetch_related("time_slots")

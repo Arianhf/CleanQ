@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from users.models import CustomUser
 from django.conf import settings
+from django.shortcuts import reverse
 
 import datetime
 from django.utils import timezone
@@ -27,6 +28,10 @@ class Clinic(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this clinic."""
+        return reverse("clinic-detail", args=[str(self.id)])
+
     class meta:
         ordering = ["name"]
         verbose_name = _("clinic")
@@ -41,10 +46,8 @@ class TimeSlot(models.Model):
         on_delete=models.CASCADE,
         related_name="time_slots",
     )
-    start_time = models.DateTimeField("start time", default=timezone.now, blank=True)
-    end_time = models.DateTimeField(
-        "end time", default=timezone.now() + datetime.timedelta(hours=3), blank=True
-    )
+    start_time = models.DateTimeField("start time", default=None, blank=True)
+    end_time = models.DateTimeField("end time", default=None, blank=True)
 
     reserver = models.ForeignKey(
         CustomUser,
