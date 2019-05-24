@@ -7,6 +7,9 @@ from rest_framework import generics
 
 from users import models
 from users import serializers
+from django.http import HttpResponseRedirect
+
+from django.contrib.auth.views import auth_login
 
 
 class SignUpView(TemplateView):
@@ -21,3 +24,4 @@ class UserListView(generics.ListCreateAPIView):
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.CustomUser.objects.all()
     serializer_class = serializers.CustomUserSerializer
+

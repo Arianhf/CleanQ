@@ -63,7 +63,20 @@ class TimeSlot(models.Model):
     def __str__(self):
         return f"{self.clinic.name} {self.start_time} until {self.end_time}"
 
+    def get_time_diff(self):
+        return self.end_time - self.start_time
+
+    def time_has_passed(self):
+        return timezone.now() > self.end_time
+
+    def currently_occuring(self):
+        if timezone.now() > self.start_time and timezone.now < self.end_time:
+            return True
+        else:
+            return False
+
     class meta:
         ordering = ["clinic"]
         verbose_name = _("timeslot")
         verbose_name_plural = _("timeslots")
+

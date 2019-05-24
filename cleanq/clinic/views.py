@@ -17,6 +17,7 @@ from clinic.forms import TimeslotCreateForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from users.decorators import rep_required, basic_required
+from django.utils import timezone
 
 
 @api_view(["GET"])
@@ -121,3 +122,34 @@ class ClinicListView(generic.ListView):
     ordering = "name"
     paginate_by = 15
     queryset = Clinic.objects.prefetch_related("time_slots")
+
+
+@method_decorator(basic_required, name="dispatch")
+@method_decorator(login_required, name="dispatch")
+class UserReservedTimeSlotsList(generic.ListView):
+    """Generic class-based list view for a list of clinics."""
+
+    model = TimeSlot
+    ordering = "start_time"
+    paginate_by = 15
+
+    def get_queryset(self):
+        user = self.request.user
+        return TimeSlot.objects.filter(reserver=user)
+
+
+@method_decorator(basic_required, name="dispatch")
+@method_decorator(login_required, name="dispatch")
+class UserPastReservedTimeSlotsList(generic.ListView):
+    """Generic class-based list view for a list of clinics."""
+
+    model = TimeSlot
+    ordering = "start_time"
+    paginate_by = 15
+
+    def get_queryset(self):
+        user = self.request.user
+
+        now = timezone.now()
+
+        return TimeSlot.objects.filter(reserver=user, end_time__lt=(now))
