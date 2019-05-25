@@ -103,7 +103,7 @@
     {% endif %}
 
     <div class="row">
-      <div class="col-md-2 pt-3">
+      <div class="col-md-3 pt-3">
         <div class="content-section">
           {% block sidebar %}
           <ul class="sidebar-nav">
@@ -129,6 +129,7 @@
           <hr />
           <ul class="sidebar-nav">
             <li><a href="{% url 'user-reserved-timeslots' %}">my reserved timeslots</a></li>
+            <li><a href="{% url 'reserve-timeslot' %}">reserve a timeslot</a></li>
           </ul>
           {% endif %}
           
@@ -136,7 +137,7 @@
           {% endblock %}
         </div>
       </div>
-      <div class="col-md-10">
+      <div class="col-md-9">
         {% block content %}
         <div class="row">
           <div class="col-lg-4 col-sm-6 portfolio-item">

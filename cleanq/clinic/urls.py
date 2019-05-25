@@ -6,6 +6,11 @@ urlpatterns = [
     path("reserve-timeslot/", views.reserve_slot, name="reserve-timeslot"),
     path("clinic/<int:pk>/", views.ClinicDetailView.as_view(), name="clinic-detail"),
     path(
+        "clinic/<int:pk>/reserve-timeslot/",
+        views.reserve_slot_clinic,
+        name="clinic-reserve-timeslot",
+    ),
+    path(
         "timeslot/create/", views.TimeslotCreateView.as_view(), name="timeslot-create"
     ),
     path(

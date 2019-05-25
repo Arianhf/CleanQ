@@ -57,3 +57,10 @@ class TimeslotReserveForm(forms.Form):
     timeslot = forms.ModelChoiceField(
         queryset=TimeSlot.objects.filter(reserver=None, clinic__is_verified=True)
     )
+
+
+class TimeslotClinicReserveForm(forms.Form):
+
+    timeslot = forms.ModelChoiceField(
+        queryset=TimeSlot.objects.filter(reserver=None, clinic__is_verified=True)
+    )
