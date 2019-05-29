@@ -6,6 +6,7 @@ from django.shortcuts import reverse
 
 import datetime
 from django.utils import timezone
+import pytz
 
 
 class Clinic(models.Model):
@@ -61,7 +62,12 @@ class TimeSlot(models.Model):
     )
 
     def __str__(self):
-        return f"{self.clinic.name} {self.start_time} until {self.end_time}"
+        if str(self.end_time.strftime("%b %-d")) == str(
+            self.start_time.strftime("%b %-d")
+        ):
+            return f"{self.clinic.name}: on {self.start_time.strftime('%b %-d')}  {self.start_time.strftime('%H:%M %Z')} until {self.end_time.strftime('%H:%M %Z')}"
+        else:
+            return f"{self.clinic.name}:  {self.start_time.strftime('%b %-d %H:%M %Z')} until {self.end_time.strftime('%b %-d %H:%M %Z')}"
 
     def get_time_diff(self):
         return self.end_time - self.start_time

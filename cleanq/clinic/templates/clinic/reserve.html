@@ -1,7 +1,8 @@
 {% extends 'clinic/base.html' %}
 
 {% load crispy_forms_tags %}
-
+{% load tz %} 
+{% timezone "Asia/Tehran" %}
 {% block content %}
 <div class="row">
     <div class="col-md-8 col-sm-10 col-12">
@@ -14,3 +15,5 @@
     </div>
 </div>
 {% endblock %}
+
+{% endtimezone %}
