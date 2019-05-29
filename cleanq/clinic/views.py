@@ -90,8 +90,14 @@ class availableTimeSlotsList(generics.ListAPIView):
         """
         this view should return a list of all available
         timeslots for all clinics
+        and Optionally restricts the returned slots to a given clinic,
+        by filtering against a `clinic_name` query parameter in the URL.
         """
-        return TimeSlot.objects.filter(reserver=None)
+        queryset = TimeSlot.objects.filter(reserver=None)
+        clinic_name = self.request.query_params.get("clinic_name", None)
+        if clinic_name is not None:
+            queryset = queryset.filter(clinic__name__contains=clinic_name)
+        return queryset
 
 
 def index(request):
@@ -137,6 +143,7 @@ class UserReservedTimeSlotsList(generic.ListView):
     model = TimeSlot
     ordering = "start_time"
     paginate_by = 15
+    template_name = "clinic/timeslot_list_user.html"
 
     def get_queryset(self):
         user = self.request.user

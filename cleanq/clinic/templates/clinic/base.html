@@ -38,14 +38,14 @@
   <!-- Navigation -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'home' %}">{% trans "Local Library" %}</a>
-      {% block searchbox %}
+      <a class="navbar-brand" href="{% url 'home' %}">{% trans "CleanQ" %}</a>
+      {% comment %} {% block searchbox %}
       <form id="search" method="POST" action="">
         {% csrf_token %}
         <input type="text" class="form-control ui-widget offset-md-4" id="books" name="books"
           placeholder="{% trans 'Search' %}">
       </form>
-      {% endblock searchbox %}
+      {% endblock searchbox %} {% endcomment %}
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
         data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
         aria-label="Toggle navigation">

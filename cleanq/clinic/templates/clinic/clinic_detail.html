@@ -10,10 +10,13 @@
     </div>
 </div>
 <div class='mt-4 ml-4'>
+<p><span class="text-success">green</span> means this slot is available to reserve</p>
+<p><span class="text-danger">red</span> means this slot is not available to reserve</p>
+
 <h4>{% trans "Time slots" %}</h4>
 
-
 {% for slot in clinic.time_slots.all %}
+{% if not slot.time_has_passed %}
 <hr>
     {% if slot.end_time.date == slot.start_time.date %}
         <p class="{% if slot.reserver is None %}text-success{% else %}text-danger{% endif %}">on {{slot.start_time.date}} starts on {{ slot.start_time.time }} and lasts until {{slot.end_time.time }}</p>
@@ -22,6 +25,8 @@
         <p class="{% if slot.reserver is None %}text-success{% else %}text-danger{% endif %}"> starts on {{ slot.start_time }} and lasts until {{slot.end_time}}</p>
         <p class="{% if slot.reserver is None %}text-success{% else %}text-danger{% endif %} text-muted"> this slot takes {{slot.get_time_diff }} hours </p> 
     {% endif %}
+{%endif%}
 {% endfor %}
+
 </div>
 {% endblock %}

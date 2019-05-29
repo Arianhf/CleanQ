@@ -1,5 +1,6 @@
 from django.urls import path, include
 from clinic import views
+from users.views import user as user_views
 
 urlpatterns = [
     path("", views.index, name="home"),
@@ -36,32 +37,34 @@ urlpatterns = [
     path(
         "api/v1/",
         include(
-            (
-                [
-                    path("", views.api_root, name="api-home"),
-                    path("clinics/", views.ClinicList.as_view(), name="clinic-list"),
-                    path(
-                        "clinics/<int:pk>/",
-                        views.ClinicDetail.as_view(),
-                        name="clinic-detail",
-                    ),
-                    path(
-                        "timeslots/", views.TimeSlotList.as_view(), name="timeslot-list"
-                    ),
-                    path(
-                        "timeslots/<int:pk>/",
-                        views.TimeSlotDetail.as_view(),
-                        name="timeslot-detail",
-                    ),
-                    path(
-                        "available-timeslots/",
-                        views.availableTimeSlotsList.as_view(),
-                        name="available-timeslots-list",
-                    ),
-                ],
-                "api",
-            ),
-            namespace="api",
+            [
+                path("", views.api_root, name="api-home"),
+                path("login/", user_views.login, name="api-login"),
+                path(
+                    "register/",
+                    user_views.CreateUserView.as_view(),
+                    name="api-register",
+                ),
+                path("clinics/", views.ClinicList.as_view(), name="clinic-list-api"),
+                path(
+                    "clinics/<int:pk>/",
+                    views.ClinicDetail.as_view(),
+                    name="clinic-detail-api",
+                ),
+                path(
+                    "timeslots/", views.TimeSlotList.as_view(), name="timeslot-list-api"
+                ),
+                path(
+                    "timeslots/<int:pk>/",
+                    views.TimeSlotDetail.as_view(),
+                    name="timeslot-detail-api",
+                ),
+                path(
+                    "available-timeslots/",
+                    views.availableTimeSlotsList.as_view(),
+                    name="available-timeslots-list-api",
+                ),
+            ]
         ),
     ),
 ]

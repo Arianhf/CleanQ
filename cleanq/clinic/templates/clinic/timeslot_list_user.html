@@ -1,0 +1,16 @@
+{% extends "clinic/base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<p><span class="text-success">green</span> means this timeslot happens in future</p>
+<p><span class="text-danger">red</span> means time of this timeslot has passed</p>
+<p><span class="text-warning">yellow</span> means timeslot is happening now</p>
+
+{% for slot in object_list %}
+<hr>
+    <p class="{% if slot.time_has_passed %}text-danger{% else %}text-success{% endif %}">{{ slot.start_time }} _ {{slot.end_time}}</p>
+    <p class="text-muted"> this slot takes {{slot.get_time_diff }} hours </p> 
+{% endfor %}
+</div>
+{% endblock %}
