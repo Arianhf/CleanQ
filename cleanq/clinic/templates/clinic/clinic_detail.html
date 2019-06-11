@@ -25,6 +25,16 @@
         <p class="{% if slot.reserver is None %}text-success{% else %}text-danger{% endif %}"> starts on {{ slot.start_time }} and lasts until {{slot.end_time}}</p>
         <p class="{% if slot.reserver is None %}text-success{% else %}text-danger{% endif %} text-muted"> this slot takes {{slot.get_time_diff }} hours </p> 
     {% endif %}
+{% else %}
+    {% if clinic.rep == request.user %}
+        {% if slot.end_time.date == slot.start_time.date %}
+        <p class="{% if slot.reserver is None %}text-success{% else %}text-danger{% endif %}">on {{slot.start_time.date}} starts on {{ slot.start_time.time }} and lasts until {{slot.end_time.time }}</p>
+        <p class="{% if slot.reserver is None %}text-success{% else %}text-danger{% endif %} text-muted"> this slot takes {{slot.get_time_diff }} hours </p> 
+    {% else %}
+        <p class="{% if slot.reserver is None %}text-success{% else %}text-danger{% endif %}"> starts on {{ slot.start_time }} and lasts until {{slot.end_time}}</p>
+        <p class="{% if slot.reserver is None %}text-success{% else %}text-danger{% endif %} text-muted"> this slot takes {{slot.get_time_diff }} hours </p> 
+    {% endif %}
+    {% endif %}
 {%endif%}
 {% endfor %}
 

@@ -1,6 +1,30 @@
 {% extends "clinic/base.html" %}
 {% block content %}
+    {% if request.user.is_rep %}
+    <b class="">My Clinics</b>
+    <div class="row">
 
+    {% for clinic in clinics %}
+
+        {% if clinic.rep == request.user %}
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+        <div class="card h-100">
+            {% comment %} <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a> {% endcomment %}
+            <div class="card-body">
+            <h4 class="card-title">
+                <a href="{{ clinic.get_absolute_url }}">{{clinic.name}}</a>
+            </h4>
+            <p class="card-text">{{clinic.address}}</p>
+            </div>
+        </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+    <hr>
+    {% endif %}
+    
+    
     <div class="row">
 
     {% for clinic in clinics %}

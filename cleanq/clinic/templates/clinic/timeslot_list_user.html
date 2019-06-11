@@ -7,10 +7,36 @@
 <p><span class="text-danger">red</span> means time of this timeslot has passed</p>
 <p><span class="text-warning">yellow</span> means timeslot is happening now</p>
 
+<b class="">Upcoming</b>
 {% for slot in object_list %}
+{% if not slot.time_has_passed %}
+        <p class="{% if slot.time_has_passed %}text-danger{% else %}text-success{% endif %}">{{ slot.start_time }} _ {{slot.end_time}}</p>
+        <p class="text-muted"> this slot takes {{slot.get_time_diff }} hours </p> 
 <hr>
-    <p class="{% if slot.time_has_passed %}text-danger{% else %}text-success{% endif %}">{{ slot.start_time }} _ {{slot.end_time}}</p>
-    <p class="text-muted"> this slot takes {{slot.get_time_diff }} hours </p> 
+{%endif%}
 {% endfor %}
+
+
+<b class="">Happening</b>
+<hr>
+{% for slot in object_list %}
+{% if slot.currently_occuring %}
+        <p class="text-warning">{{ slot.start_time }} _ {{slot.end_time}}</p>
+        <p class="text-muted"> this slot takes {{slot.get_time_diff }} hours </p> 
+<hr>
+{%endif%}
+{% endfor %}
+
+<b class="">Past</b>
+<hr>
+{% for slot in object_list %}
+{% if slot.time_has_passed %}
+        <p class="{% if slot.time_has_passed %}text-danger{% else %}text-success{% endif %}">{{ slot.start_time }} _ {{slot.end_time}}</p>
+        <p class="text-muted"> this slot takes {{slot.get_time_diff }} hours </p> 
+<hr>
+{%endif%}
+{% endfor %}
+
+
 </div>
 {% endblock %}

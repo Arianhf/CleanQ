@@ -31,7 +31,7 @@ class Clinic(models.Model):
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this clinic."""
-        return reverse("clinic-detail", args=[str(self.id)])
+        return reverse("clinic-detail-view", args=[str(self.id)])
 
     class meta:
         ordering = ["name"]
@@ -76,13 +76,13 @@ class TimeSlot(models.Model):
         return timezone.now() > self.end_time
 
     def currently_occuring(self):
-        if timezone.now() > self.start_time and timezone.now < self.end_time:
+        if timezone.now() > self.start_time and timezone.now() < self.end_time:
             return True
         else:
             return False
 
     class meta:
-        ordering = ["clinic"]
+        ordering = ["start_time"]
         verbose_name = _("timeslot")
         verbose_name_plural = _("timeslots")
 

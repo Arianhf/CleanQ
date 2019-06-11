@@ -55,7 +55,9 @@ class TimeslotCreateForm(forms.ModelForm):
 
 class TimeslotReserveForm(forms.Form):
     timeslot = forms.ModelChoiceField(
-        queryset=TimeSlot.objects.filter(reserver=None, clinic__is_verified=True)
+        queryset=TimeSlot.objects.filter(
+            reserver=None, clinic__is_verified=True, start_time__gt=timezone.now()
+        )
     )
 
 

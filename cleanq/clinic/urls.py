@@ -5,7 +5,9 @@ from users.views import user as user_views
 urlpatterns = [
     path("", views.index, name="home"),
     path("reserve-timeslot/", views.reserve_slot, name="reserve-timeslot"),
-    path("clinic/<int:pk>/", views.ClinicDetailView.as_view(), name="clinic-detail"),
+    path(
+        "clinic/<int:pk>/", views.ClinicDetailView.as_view(), name="clinic-detail-view"
+    ),
     path(
         "clinic/<int:pk>/reserve-timeslot/",
         views.reserve_slot_clinic,
@@ -45,24 +47,22 @@ urlpatterns = [
                     user_views.CreateUserView.as_view(),
                     name="api-register",
                 ),
-                path("clinics/", views.ClinicList.as_view(), name="clinic-list-api"),
+                path("clinics/", views.ClinicList.as_view(), name="clinic-list"),
                 path(
                     "clinics/<int:pk>/",
                     views.ClinicDetail.as_view(),
-                    name="clinic-detail-api",
+                    name="clinic-detail",
                 ),
-                path(
-                    "timeslots/", views.TimeSlotList.as_view(), name="timeslot-list-api"
-                ),
+                path("timeslots/", views.TimeSlotList.as_view(), name="timeslot-list"),
                 path(
                     "timeslots/<int:pk>/",
                     views.TimeSlotDetail.as_view(),
-                    name="timeslot-detail-api",
+                    name="timeslot-detail",
                 ),
                 path(
                     "available-timeslots/",
                     views.availableTimeSlotsList.as_view(),
-                    name="available-timeslots-list-api",
+                    name="available-timeslots-list",
                 ),
             ]
         ),
