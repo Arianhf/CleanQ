@@ -7,10 +7,14 @@ from .models import TimeSlot, Clinic
 
 class TimeSlotAdmin(admin.ModelAdmin):
     list_display = ("clinic", "reserver", "start_time", "end_time")
+    list_filter = ("clinic",)
+    search_fields = ("clinic__name",)
 
 
 class ClinicAdmin(admin.ModelAdmin):
     list_display = ("rep", "address")
+    search_fields = ("name", "address", "rep__username")
+    list_filter = ("address", "name", "rep")
 
 
 # class BasicUserAdmin(admin.ModelAdmin):
